@@ -8,11 +8,14 @@ set -e
 BUILD_DIR=$1
 CACHE_DIR=$2
 
+export LD_LIBRARY_PATH=/usr/local/lib
+
 # fetch and cache the vulcan build
 OPENCV_PACKAGE="http://s3.amazonaws.com/tznode/vulcan-compiled-opencv.tgz"
 OPENCV_PACKAGE_ETAG=$(curl -s --head "$OPENCV_PACKAGE" | grep -Ei '^etag' | sed -r 's/^etag|[^a-zA-Z0-9]+//gi')
 VENDORED_OPENCV="/app/vendor/opencv"
 OPENCV_CACHE="$CACHE_DIR/opencv_$OPENCV_PACKAGE_ETAG";
+
 
 echo "-----> Adding Lib Paths !!!"
 
@@ -43,3 +46,5 @@ echo "export PATH=\"\$HOME/vendor/opencv/lib:$PATH\"" >> $BUILD_DIR/.profile.d/n
 echo "export PATH=\"\$HOME/vendor/opencv/lib/pkgconfig:$PATH\"" >> $BUILD_DIR/.profile.d/nodejs.sh
 echo "export LD_LIBRARY_PATH=\"\$HOME/vendor/opencv/lib:\$LD_LIBRARY_PATH\"" >> $BUILD_DIR/.profile.d/nodejs.sh
 echo "export PKG_CONFIG_PATH=\"\$HOME/vendor/opencv/lib/pkgconfig:\$PKG_CONFIG_PATH\"" >> $BUILD_DIR/.profile.d/nodejs.sh
+
+echo "-----> Done loading opencv from buildpack !!!"
