@@ -14,6 +14,8 @@ OPENCV_PACKAGE_ETAG=$(curl -s --head "$OPENCV_PACKAGE" | grep -Ei '^etag' | sed 
 VENDORED_OPENCV="/app/vendor/opencv"
 OPENCV_CACHE="$CACHE_DIR/opencv_$OPENCV_PACKAGE_ETAG";
 
+echo "-----> Adding Lib Paths !!!"
+
 export LD_LIBRARY_PATH="$path/lib:$LD_LIBRARY_PATH"
 export LIBRARY_PATH="$path/lib:$LIBRARY_PATH"
 export PKG_CONFIG_PATH="/app/vendor/opencv/lib/pkgconfig:$PKG_CONFIG_PATH"
